@@ -14,11 +14,20 @@
     <div id="block" class="block"></div>
     <script>
       const block = document.getElementById('block')
-      block.style.top = "90px";
+      block.style.top = "200px";
       document.addEventListener('click', (e)=> {
         for (let i = 0; i < 5; i++) {
-          block.style.top = (parseInt(block.style.top) - 10) + "px";
+          setTimeout(()=> {
+            block.style.top = (parseInt(block.style.top) - 10) + "px";
+          },5 * i)
         }
+        setTimeout(()=> {
+         for (let i = 0; i < 5; i++) {
+          setTimeout(()=> {
+            block.style.top = (parseInt(block.style.top) + 10) + "px";
+          },5 * i)
+         }
+        }, 25)
         })
     </script>
   </body>
