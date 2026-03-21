@@ -8,6 +8,8 @@
         background: green;
         position: absolute;
       }
+      @keyframes rotate{
+        from {transform: rotate(0deg)} to {transform: rotate(90deg)}}
     </style>
   </head>
   <body>
@@ -16,6 +18,7 @@
       const block = document.getElementById('block')
       block.style.top = "1000px";
       document.addEventListener('click', (e)=> {
+        block.style.animation = "rotate 1s 1";
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 20) + "px";
@@ -28,7 +31,10 @@
           },8 * i)
          }
         }, 165)
-        })
+        block.style.transform = "rotate(" + (parseInt(block.style.transform) + 90) + "deg)"
+        block.style.animation = "none";
+      })
+      
     </script>
   </body>
 </html>
