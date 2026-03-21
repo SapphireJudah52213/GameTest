@@ -18,16 +18,16 @@
       document.addEventListener('click', (e)=> {
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) - 10) + "px";
-          },8 * i)
+            block.style.top = (parseInt(block.style.top) - 20) + "px";
+          },10 * i)
         }
         setTimeout(()=> {
          for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) + 10) + "px";
+            block.style.top = (parseInt(block.style.top) + 20) + "px";
           },8 * i)
          }
-        }, 70)
+        }, 90)
         })
     </script>
   </body>
