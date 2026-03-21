@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .block {
+        height: 40px;
+        width: 40px;
+        background: green;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="block" class="block"></div>
+    <script>
+      const block = document.getElementById('block')
+      block.style.top = "0px";
+      document.addEventListener('click', (e)=> {
+        block.style.top = (parseInt(block.style.top) + 10) + "px";
+      }
+    </script>
+  </body>
+</html>
