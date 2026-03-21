@@ -3,8 +3,8 @@
   <head>
     <style>
       .block {
-        height: 40px;
-        width: 40px;
+        height: 80px;
+        width: 80px;
         background: green;
         position: absolute;
       }
@@ -14,20 +14,20 @@
     <div id="block" class="block"></div>
     <script>
       const block = document.getElementById('block')
-      block.style.top = "200px";
+      block.style.top = "1000px";
       document.addEventListener('click', (e)=> {
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 10) + "px";
-          },5 * i)
+          },8 * i)
         }
         setTimeout(()=> {
-         for (let i = 0; i < 5; i++) {
+         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) + 10) + "px";
-          },5 * i)
+          },8 * i)
          }
-        }, 25)
+        }, 70)
         })
     </script>
   </body>
