@@ -15,11 +15,12 @@
   <body>
     <div id="block" class="block">hi</div>
     <script>
+      let rotation = 0
       const block = document.getElementById('block')
       block.style.top = "1000px";
       block.style.transform = "rotate(0deg)"
       document.addEventListener('click', (e)=> {
-        block.style.animation = "rotate 1s 1";
+        block.style.animation = "rotate 80ms 1";
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 20) + "px";
@@ -32,8 +33,10 @@
           },8 * i)
          }
         }, 165)
-        block.style.transform = "rotate(" + (parseInt(block.style.transform) + 90) + "deg)"
-        //block.style.animation = "none";
+        
+        setTimeout(()=> {block.style.animation = "none";
+                        block.style.transform = "rotate(" + (rotation + 90) + "deg)"
+                        }, 80)
       })
       
     </script>
