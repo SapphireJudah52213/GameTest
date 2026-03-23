@@ -20,7 +20,7 @@
       block.style.top = "1000px";
       block.style.transform = "rotate(0deg)"
       document.addEventListener('click', (e)=> {
-        block.style.animation = "rotate 80ms 1";
+        block.style.animation = "rotate 30ms 1";
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 20) + "px";
@@ -34,9 +34,15 @@
          }
         }, 165)
         
-        setTimeout(()=> {block.style.animation = "none";
+        for (let i = 0; i < 90; i++) {
+          setTimeout(()=> {
+            block.style.transform = rotation
+            rotation ++;
+          }, 1 * i)
+        }
+        /*setTimeout(()=> {block.style.animation = "none";
                         block.style.transform = "rotate(" + (rotation + 90) + "deg)"
-                        }, 80)
+                        }, 40)*/
       })
       
     </script>
