@@ -2,18 +2,34 @@
 <html>
   <head>
     <style>
+      body {
+        background: black;
+        overflow: hidden;
+      }
       .block {
         height: 80px;
         width: 80px;
         background: green;
         position: absolute;
       }
+      .background {
+        background: blue;
+        height: 200px;
+        width: 5000px;
+      }
+      .spike {
+        height: 20px;
+        width: 20px;
+        background: rgb(100, 100, 100);
+      }
       @keyframes rotate{
         from {transform: rotate(0deg)} to {transform: rotate(90deg)}}
     </style>
   </head>
   <body>
+    <div id="background" class="background"></div>
     <div id="block" class="block">hi</div>
+    <div id="spike" class="spike" style="left: 10%;"></div>
     <script>
       let rotation = 0
       const block = document.getElementById('block')
