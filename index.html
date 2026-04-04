@@ -68,8 +68,8 @@
       setTimeout(()=> {
         for (let i = 0; i<20000; i++) {
          setTimeout(()=> {
-          bg.style.marginRight = (parseInt(i)) + "px";
-         }, 100 * i);
+          bg.style.marginRight = (parseInt(bg.style.marginRight) + 1) + "px";
+         }, 10 * i);
         }
       }, 1000);
       
