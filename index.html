@@ -13,7 +13,7 @@
         position: absolute;
       }
       .background {
-        background: repeating-linear-gradient(to left, red, #ff9900, #ffff00, #ffff99, #ffffff, #99ffff, #00ffff, #0099ff, #0000ff);
+        background: repeating-linear-gradient(to right, red, #ff9900, #ffff00, #ffff99, #ffffff, #99ffff, #00ffff, #0099ff, #0000ff);
         height: 200px;
         width: 20000px;
       }
@@ -34,7 +34,9 @@
     <script>
       let rotation = 0
       const block = document.getElementById('block')
+      const bg = document.getElementById('background')
       block.style.top = "180px";
+      bg.style.right = "0px";
       block.style.transform = "rotate(0deg)"
       document.addEventListener('click', (e)=> {
         block.style.animation = "rotate 30ms 1";
@@ -61,6 +63,14 @@
                         block.style.transform = "rotate(" + (rotation + 90) + "deg)"
                         }, 40)*/
       })
+
+      setTimeout(()=> {
+        for (int i = 0; i<20000; i++) {
+         setTimeout(()=> {
+          bg.style.right = (parseInt(bg.style.right) + 1) + "px";
+         }, 10 * i);
+        }
+      }, 1000);
       
     </script>
   </body>
