@@ -37,7 +37,7 @@
       const block = document.getElementById('block')
       const bg = document.getElementById('background')
       block.style.top = "180px";
-      bg.style.marginRight = "0px";
+      bg.style.marginLeft = "0px";
       block.style.transform = "rotate(0deg)"
       document.addEventListener('click', (e)=> {
         block.style.animation = "rotate 30ms 1";
@@ -68,7 +68,7 @@
       setTimeout(()=> {
         for (let i = 0; i<20000; i++) {
          setTimeout(()=> {
-          bg.style.marginRight = (parseInt(bg.style.marginRight) + 1) + "px";
+          bg.style.marginLeft = (parseInt(bg.style.marginLeft) + 1) + "px";
          }, 10 * i);
         }
       }, 1000);
