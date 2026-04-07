@@ -45,17 +45,21 @@
       block.style.top = "305px";
       bg.style.marginLeft = "0px";
       block.style.transform = "rotate(0deg)"
+      let speed = 10;
       document.addEventListener('click', (e)=> {
         block.style.animation = "rotate 30ms 1";
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 20) + "px";
+            speed = 20;
           },10 * i)
         }
         setTimeout(()=> {
+          speed = 10;
          for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) + 20) + "px";
+            //speed = 20;
           },8 * i)
          }
         }, 165)
@@ -77,9 +81,11 @@
         for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) - 20) + "px";
+            speed = 20;
           },15 * i)
         }
         setTimeout(()=> {
+          speed = 10;
          for (let i = 0; i < 8; i++) {
           setTimeout(()=> {
             block.style.top = (parseInt(block.style.top) + 20) + "px";
@@ -102,7 +108,7 @@
       setTimeout(()=> {
         for (let i = 0; i<2000; i++) {
          setTimeout(()=> {
-          bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 10) + "px";
+          bg.style.marginLeft = (parseInt(bg.style.marginLeft) - speed) + "px";
          }, 50 * i);
         }
       }, 2000);
