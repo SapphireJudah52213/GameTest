@@ -1,157 +1,126 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      body {
-        background: black;
-        overflow: hidden;
-      }
-      .block {
-        height: 80px;
-        width: 80px;
-        background-image: url('IMG_5192.png');
-        position: absolute;
-        background-size: cover;
-      }
-      .background {
-        background-image: url('./56CCAB10-EBC7-468A-9B3C-1AB67EC58110.jpeg');
-        height: 534px;
-        width: 20000px;
-        position: unset;
-      }
-      .spike {
-        top: 305px;
-        height: 60px;
-        width: 60px;
-         background-image: url('./IMG_5201.PNG');
-        background-size: cover;
-        position: relative;
-      }
-      @keyframes rotate{
-        from {transform: rotate(0deg)} to {transform: rotate(90deg)}}
-    </style>
-  </head>
-  <body>
-    <div id="background" class="background">
-      <div id="spike" class="spike" style="left: 10%;"></div>
-      <div id="spike" class="spike" style="left: 30%;"></div>
-    </div>
-    <div id="block" class="block"></div>
-    
-    <script>
-      let rotation = 0
-      const block = document.getElementById('block')
-      const bg = document.getElementById('background')
-      block.style.top = "305px";
-      bg.style.marginLeft = "0px";
-      block.style.transform = "rotate(0deg)"
-      let speed = 10;
-      document.addEventListener('click', (e)=> {
-        block.style.animation = "rotate 30ms 1";
-        for (let i = 0; i < 8; i++) {
-          setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) - 20) + "px";
-            speed = 10;
-          },10 * i)
-        }
-        setTimeout(()=> {
-          speed = 10;
-         for (let i = 0; i < 8; i++) {
-          setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) + 20) + "px";
-            //speed = 20;
-          },8 * i)
-         }
-        }, 655)
-        
-        for (let i = 0; i < 90; i++) {
-          setTimeout(()=> {
-            block.style.transform = "rotate(" + rotation + "deg)"
-            rotation ++;
-          }, 7.28 * i)
-        }
-        /*setTimeout(()=> {block.style.animation = "none";
-                        block.style.transform = "rotate(" + (rotation + 90) + "deg)"
-                        }, 40)*/
-      })
+<head>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
 
-      document.addEventListener('keydown', (e)=> {
-       if (e.key === " ") {
-        block.style.animation = "rotate 30ms 1";
-        for (let i = 0; i < 8; i++) {
-          setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) - 20) + "px";
-            speed = 10;
-          },15 * i)
-        }
-        setTimeout(()=> {
-          speed = 10;
-         for (let i = 0; i < 8; i++) {
-          setTimeout(()=> {
-            block.style.top = (parseInt(block.style.top) + 20) + "px";
-          },15 * i)
-         }
-        }, 655)
-        
-        for (let i = 0; i < 90; i++) {
-          setTimeout(()=> {
-            block.style.transform = "rotate(" + rotation + "deg)"
-            rotation ++;
-          }, 7.28 * i)
-        }
-        /*setTimeout(()=> {block.style.animation = "none";
-                        block.style.transform = "rotate(" + (rotation + 90) + "deg)"
-                        }, 40)*/
-       }
-      })
+    .background {
+      position: relative;
+      height: 400px;
+      width: 20000px;
+      background-image: url('./56CCAB10-EBC7-468A-9B3C-1AB67EC58110.jpeg');
+      background-size: cover;
+    }
 
-      let done = false;
-      
-      function moveBg() {
-        if (!done) {
-          for (let i = 0; i < 20000; i ++) {
-            setTimeout(()=> {
-              if (done) {break;}
-              bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";
-            }, 5 * i);
-          }
-        }
-      }
-      setTimeout(()=> {
-        moveBg();
-        setTimeout(() => {
-          done = true;
-        }, 40000)
-      }, 2000);
-      let counter = 0;
-      
-      function start() {
-  if (!done) {
-    let el = document.getElementsByClassName('spike');
-    for (let i = 0; i < el.length; i++) {
-      if (isTouching(block, el.item(i))) {
-        done = true;
-        console.log("finished!");
+    .block {
+      position: absolute;
+      height: 60px;
+      width: 60px;
+      background-image: url('IMG_5192.png');
+      background-size: cover;
+      left: 100px;
+      top: 300px;
+    }
+
+    .spike {
+      position: absolute;
+      height: 60px;
+      width: 60px;
+      background-image: url('./IMG_5201.PNG');
+      background-size: cover;
+      top: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="background" class="background">
+    <div class="spike" style="left: 500px;"></div>
+    <div class="spike" style="left: 900px;"></div>
+    <div class="spike" style="left: 1300px;"></div>
+  </div>
+
+  <div id="block" class="block"></div>
+
+  <script>
+    const block = document.getElementById("block");
+    const bg = document.getElementById("background");
+    const spikes = document.getElementsByClassName("spike");
+
+    let y = 300;
+    let velocity = 0;
+    let gravity = 0.8;
+    let jumpPower = -12;
+
+    let bgX = 0;
+    let speed = 5;
+
+    let rotation = 0;
+    let done = false;
+
+    // Jump input
+    function jump() {
+      if (y >= 300) { // only jump if on ground
+        velocity = jumpPower;
       }
     }
-    requestAnimationFrame(start);
-  }
-}
-      start()
-      
 
-      function isTouching(a, b) {
-        const r1 = a.getBoundingClientRect();
-        const r2 = b.getBoundingClientRect();
+    document.addEventListener("click", jump);
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Space") jump();
+    });
 
-        return !(
-          r1.right < r2.left ||
-          r1.left > r2.right ||
-          r1.bottom < r2.top ||
-          r1.top > r2.bottom
-        );
+    function gameLoop() {
+      if (done) return;
+
+      // Gravity
+      velocity += gravity;
+      y += velocity;
+
+      // Ground collision
+      if (y > 300) {
+        y = 300;
+        velocity = 0;
+        rotation = 0;
+      } else {
+        rotation += 6;
       }
-      
-    </script>
-  </body>
+
+      block.style.top = y + "px";
+      block.style.transform = `rotate(${rotation}deg)`;
+
+      // Move background
+      bgX -= speed;
+      bg.style.transform = `translateX(${bgX}px)`;
+
+      // Collision detection
+      for (let spike of spikes) {
+        if (isTouching(block, spike)) {
+          done = true;
+          alert("Game Over!");
+        }
+      }
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function isTouching(a, b) {
+      const r1 = a.getBoundingClientRect();
+      const r2 = b.getBoundingClientRect();
+
+      return !(
+        r1.right < r2.left ||
+        r1.left > r2.right ||
+        r1.bottom < r2.top ||
+        r1.top > r2.bottom
+      );
+    }
+
+    gameLoop();
+  </script>
+</body>
 </html>
