@@ -25,17 +25,19 @@
         width: 60px;
          background-image: url('./IMG_5201.PNG');
         background-size: cover;
-        position: absolute;
+        position: relative;
       }
       @keyframes rotate{
         from {transform: rotate(0deg)} to {transform: rotate(90deg)}}
     </style>
   </head>
   <body>
-    <div id="background" class="background"></div>
+    <div id="background" class="background">
+      <div id="spike" class="spike" style="left: 10%;"></div>
+      <div id="spike" class="spike" style="left: 30%;"></div>
+    </div>
     <div id="block" class="block"></div>
-    <div id="spike" class="spike" style="left: 10%;"></div>
-    <div id="spike" class="spike" style="left: 30%;"></div>
+    
     <script>
       let rotation = 0
       const block = document.getElementById('block')
