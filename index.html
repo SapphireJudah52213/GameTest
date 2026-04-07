@@ -66,6 +66,34 @@
                         }, 40)*/
       })
 
+      document.addEventListener('keydown', (e)=> {
+       if (e.key === " ") {
+        block.style.animation = "rotate 30ms 1";
+        for (let i = 0; i < 8; i++) {
+          setTimeout(()=> {
+            block.style.top = (parseInt(block.style.top) - 20) + "px";
+          },10 * i)
+        }
+        setTimeout(()=> {
+         for (let i = 0; i < 8; i++) {
+          setTimeout(()=> {
+            block.style.top = (parseInt(block.style.top) + 20) + "px";
+          },8 * i)
+         }
+        }, 165)
+        
+        for (let i = 0; i < 90; i++) {
+          setTimeout(()=> {
+            block.style.transform = "rotate(" + rotation + "deg)"
+            rotation ++;
+          }, 2 * i)
+        }
+        /*setTimeout(()=> {block.style.animation = "none";
+                        block.style.transform = "rotate(" + (rotation + 90) + "deg)"
+                        }, 40)*/
+       }
+      })
+
       setTimeout(()=> {
         for (let i = 0; i<2000; i++) {
          setTimeout(()=> {
@@ -73,6 +101,18 @@
          }, 50 * i);
         }
       }, 2000);
+
+      function isTouching(a, b) {
+        const r1 = a.getBoundingClientRect();
+        const r2 = b.getBoundingClientRect();
+
+        return !(
+          r1.right < r2.left ||
+          r1.left > r2.right ||
+          r1.bottom < r2.top ||
+          r1.top > r2.bottom
+        );
+      }
       
     </script>
   </body>
