@@ -117,9 +117,9 @@
 
       return !(
         r1.right < r2.left - 5 ||
-        r1.left - 5 > r2.right ||
+        r1.left > r2.right - 5 ||
         r1.bottom < r2.top - 5 ||
-        r1.top - 5 > r2.bottom
+        r1.top > r2.bottom - 5
       );
     }
 
