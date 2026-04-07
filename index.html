@@ -111,6 +111,7 @@
         if (!done) {
           for (let i = 0; i < 20000; i ++) {
             setTimeout(()=> {
+              if (done) {break;}
               bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";
             }, 5 * i);
           }
