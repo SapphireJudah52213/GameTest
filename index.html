@@ -118,13 +118,17 @@
         }, 40000)
       }, 2000);
       let counter = 0;
-      while (!done) {
+      
+      function start() {
+        if (!done) {
         setTimeout(()=> {
         el = document.getElementsByClassName('spike');
         for (let i = 0; i < el.length; i ++) {
           if (isTouching(block, el.item(i))) {done = trueconsole.log("finished!");}
         }
         }, 10 * counter);
+      }
+        requestAnimationFrame(start);
       }
       
 
