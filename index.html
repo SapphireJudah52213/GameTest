@@ -125,11 +125,12 @@
         setTimeout(()=> {
         el = document.getElementsByClassName('spike');
         for (let i = 0; i < el.length; i ++) {
-          if (isTouching(block, el.item(i))) {done = trueconsole.log("finished!");}
+          if (isTouching(block, el.item(i))) {done = true;console.log("finished!");}
         }
-        }, 10 * counter);
+        }, 100 * counter);
+          requestAnimationFrame(start);
       }
-        requestAnimationFrame(start);
+        
       }
       
 
