@@ -107,12 +107,14 @@
 
       let done = false;
       
-      setTimeout(()=> {
-        for (let i = 0; i<20000; i++) {
-         setTimeout(()=> {
-          if (!done) {bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";}
-         }, 5 * i);
+      function moveBg() {
+        if (!done) {
+          bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";
+          requestAnimationFrame(moveBg);
         }
+      }
+      setTimeout(()=> {
+        moveBg();
         setTimeout(() => {
           done = true;
         }, 40000)
@@ -120,18 +122,18 @@
       let counter = 0;
       
       function start() {
-        if (!done) {
-          counter ++;
-        setTimeout(()=> {
-        el = document.getElementsByClassName('spike');
-        for (let i = 0; i < el.length; i ++) {
-          if (isTouching(block, el.item(i))) {done = true;console.log("finished!");}
-        }
-        }, 100 * counter);
-          requestAnimationFrame(start);
+  if (!done) {
+    let el = document.getElementsByClassName('spike');
+    for (let i = 0; i < el.length; i++) {
+      if (isTouching(block, el.item(i))) {
+        done = true;
+        console.log("finished!");
       }
-        
-      }
+    }
+    requestAnimationFrame(start);
+  }
+}
+      start()
       
 
       function isTouching(a, b) {
