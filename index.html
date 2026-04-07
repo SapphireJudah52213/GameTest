@@ -97,7 +97,7 @@
           setTimeout(()=> {
             block.style.transform = "rotate(" + rotation + "deg)"
             rotation ++;
-          }, 5.28 * i)
+          }, 7.28 * i)
         }
         /*setTimeout(()=> {block.style.animation = "none";
                         block.style.transform = "rotate(" + (rotation + 90) + "deg)"
@@ -105,13 +105,25 @@
        }
       })
 
+      let done = false;
+      
       setTimeout(()=> {
         for (let i = 0; i<20000; i++) {
          setTimeout(()=> {
-          bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";
+          if (!done) {bg.style.marginLeft = (parseInt(bg.style.marginLeft) - 1) + "px";}
          }, 5 * i);
         }
+        setTimeout(() => {
+          done = true;
+        }, 40000)
       }, 2000);
+
+      while (!done) {
+        for (s1 in document.getElementsByClassName('spike')) {
+          if (istouching(block, s1)) {done = trueconsole.log("finished!");}
+        }
+      }
+      
 
       function isTouching(a, b) {
         const r1 = a.getBoundingClientRect();
