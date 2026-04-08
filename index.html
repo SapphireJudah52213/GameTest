@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html><head>
   <style>
     body {
       margin: 0;
@@ -38,21 +37,37 @@
 </head>
 
 <body>
-  <div id="background" class="background">
+  <div id="background" class="background" style="transform: translateX(-360px);">
     <div class="spike" style="left: 500px;"></div>
     <div class="spike" style="left: 900px;"></div>
     <div class="spike" style="left: 1300px;"></div>
-    <div class="spike" style="left: 1500px;"></div>
+    <div class="spike" style="left: 1500px; transform: rotate(180deg); top: 200px;"></div>
     <div class="spike" style="left: 1900px;"></div>
     <div class="spike" style="left: 2300px;"></div>
+    <div class="spike" style="left: 2500px;"></div>
+    <div class="spike" style="left: 2900px;"></div>
+    <div class="spike" style="left: 3300px;"></div>
+    <div class="spike" style="left: 3500px;"></div>
+    <div class="spike" style="left: 3900px;"></div>
+    <div class="spike" style="left: 5300px;"></div>
+    <div class="spike" style="left: 1500px; transform: rotate(360deg); top: 450px;"></div>
   </div>
+  <div style="display:block; position: absolute; transform:translateX(20000px); height: 534px; width: 10px;background: rgba(255,255,255,0.5); top: -134px;" id="finish"></div>
 
-  <div id="block" class="block"></div>
+  <div style="background: rgba(255,255,255,0.4); height: 50px; width: 148px; display:block; position: absolute; top: 600px; text-align: center; left: 400px; font-size: 48px" id="score"></div>
+  <div style="background: rgba(255,255,255,0.4); height: 50px; width: 148px; display:block; position: absolute; top: 600px; text-align: center; left: 550px; font-size: 48px" id="highScore"></div>
+
+  <div id="block" class="block" style="top: 300px; transform: rotate(0deg);"></div>
 
   <script>
     const block = document.getElementById("block");
     const bg = document.getElementById("background");
     const spikes = document.getElementsByClassName("spike");
+    const finish = document.getElementById("finish");
+    const score = document.getElementById("score");
+
+	const params = new URLSearchParams(window.location.search);
+	hard = parseInt(params.get("hard"));
 
     let y = 300;
     let velocity = 0;
@@ -64,31 +79,60 @@
 
     let rotation = 0;
     let done = false;
+	let jumping = false;
+	let reverse = false;
 
     // Jump input
     function jump() {
-      if (y >= 300) { // only jump if on ground
+      if (y >= 300 && !jumping) { // only jump if on ground
         velocity = jumpPower;
+	gravity = 0.8
+	jumping = true
+	if (hard == 2) {reverse = !reverse;}
+      }
+    }
+
+    function jump2() {
+      if (y <= 300 && !jumping) { // only jump if on ground
+        velocity = jumpPower - 4;
+	gravity = -0.8
+	jumping = true
+	if (hard == 2) {reverse = !reverse;}
       }
     }
 
     document.addEventListener("click", jump);
     document.addEventListener("keydown", (e) => {
-      if (e.code === "Space") jump();
+      if (e.code === "Space") {if (hard == 0) {jump();} else if (hard == 1) {jump2();} else {{if (!reverse) {jump();} else {jump2();}}}}
+      if (e.key === "j" && hard != 0) {if (!reverse) {jump();} else {jump2();}}
+      //if (e.key === "r") jump2();
     });
+
+	
 
     function gameLoop() {
       if (done) return;
 
       // Gravity
+	if (gravity > 0) {
       velocity += gravity;
       y += velocity;
+	} else if (gravity < 0) {
+		velocity -= gravity;
+		y -= velocity;
+	}
 
       // Ground collision
-      if (y > 300) {
+      if (y > 300 && gravity > 0) {
         y = 300;
         velocity = 0;
         rotation = 0;
+	jumping = false;
+      } else if (y < 300 && gravity < 0) {
+	y = 300;
+	velocity = 0;
+	rotation = 0;
+	jumping = false;
       } else {
         rotation += 6;
       }
@@ -99,12 +143,22 @@
       // Move background
       bgX -= speed;
       bg.style.transform = `translateX(${bgX}px)`;
+	if (-(bgX / 10).toFixed(0) > 500) {
+		done = true;
+		alert("You beat this round!");
+		if (parseInt(localStorage.getItem('geometryDashHS')) < -(bgX / 10).toFixed(0)) {localStorage.setItem('geometryDashHS', -(bgX / 10).toFixed(0) - 1);}
+		window.location.href = `C:/Users/judah/geometryDash/geometryDash.html?hard=${Math.min(hard + 1, 2)}`
+	}
+
+	
 
       // Collision detection
       for (let spike of spikes) {
         if (isTouching(block, spike)) {
           done = true;
-          alert("Game Over!");
+          alert("Game Over!\nYour Score: " + -(bgX / 10).toFixed(0));
+	  if (parseInt(localStorage.getItem('geometryDashHS')) < -(bgX / 10).toFixed(0)) {localStorage.setItem('geometryDashHS', -(bgX / 10).toFixed(0));}
+	  window.location.href = window.location.href;
         }
       }
 
@@ -117,13 +171,36 @@
 
       return !(
         r1.right < r2.left + 20 ||
-        r1.left > r2.right + 20 ||
-        r1.bottom < r2.top + 20 ||
+        r1.left > r2.right - 20 ||
+        r1.bottom < r2.top - 20 ||
         r1.top > r2.bottom + 20
       );
     }
 
+    function isTouching2(a, b) {
+      const r1 = a.getBoundingClientRect();
+      const r2 = b.getBoundingClientRect();
+
+      return !(
+        r1.right < r2.left - 5 ||
+        r1.left > r2.right - 5 ||
+        r1.bottom < r2.top - 5 ||
+        r1.top > r2.bottom - 5
+      );
+    }
+
     gameLoop();
+
+	setInterval(()=> {
+		score.textContent = -(bgX / 10).toFixed(0);
+	}, 10);
+
+	document.getElementById("highScore").textContent = localStorage.getItem('geometryDashHS');
+
+	document.addEventListener("keypress", (e)=> {
+		if (e.key === "q") {done = !done; if (done === false) {gameLoop();}}
+	})
   </script>
-</body>
-</html>
+
+
+</body></html>
